@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Caja right-click → Scripts → "Solve with AI (online)"
+# Same as "Solve with AI" but allows the solver outbound network (remote/web/pwn targets).
+set -euo pipefail
+
+SOLVE="$HOME/ctf-auto/ctf-solve.sh"
+TARGET="$(head -n1 <<<"${CAJA_SCRIPT_SELECTED_FILE_PATHS:-}")"
+
+[[ -n "$TARGET" ]] || { zenity --error --text="Select a challenge first." 2>/dev/null; exit 1; }
+
+mate-terminal --title="Solve with AI (online)" -- \
+  bash -c 'QUIET=1 NETWORK=1 "$0" "$1"; echo; read -rp "[press Enter to close] "' "$SOLVE" "$TARGET"

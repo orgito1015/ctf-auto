@@ -1,0 +1,9 @@
+# challenge working output the scripts generate
+*.recon/
+*.web/
+WRITEUP.md
+solution/
+
+# junk
+*.swp
+.DS_Store

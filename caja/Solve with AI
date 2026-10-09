@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Caja right-click → Scripts → "Solve with AI"
+# Hands the selected challenge (folder/archive/file) to ctf-solve.sh in a terminal.
+set -euo pipefail
+
+SOLVE="$HOME/ctf-auto/ctf-solve.sh"
+TARGET="$(head -n1 <<<"${CAJA_SCRIPT_SELECTED_FILE_PATHS:-}")"
+
+[[ -n "$TARGET" ]] || { zenity --error --text="Select a challenge first." 2>/dev/null; exit 1; }
+
+# keep the terminal open after it finishes so you can read the result
+mate-terminal --title="Solve with AI" -- \
+  bash -c 'QUIET=1 "$0" "$1"; echo; read -rp "[press Enter to close] "' "$SOLVE" "$TARGET"
